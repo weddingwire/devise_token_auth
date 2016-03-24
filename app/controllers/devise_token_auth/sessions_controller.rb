@@ -30,9 +30,9 @@ module DeviseTokenAuth
       end
 
       if @resource and valid_params?(field, q_value) and @resource.valid_password?(resource_params[:password]) and (!@resource.respond_to?(:active_for_authentication?) or @resource.active_for_authentication?)
-        @resource.create_new_auth_token
-
-        sign_in(:user, @resource, store: false, bypass: false)
+        auth = @resource.create_new_auth_token
+        @client_id = auth['client']
+        @token = auth['access-token']
 
         yield if block_given?
 
