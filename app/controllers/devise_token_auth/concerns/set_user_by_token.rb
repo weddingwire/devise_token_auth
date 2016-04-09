@@ -125,6 +125,19 @@ module DeviseTokenAuth::Concerns::SetUserByToken
     mapping.to
   end
 
+  def get_resource(uid_field='uid', uid=nil)
+    if DeviseTokenAuth.custom_where_clause
+      q = DeviseTokenAuth.custom_where_clause.gsub(/uid_field/,uid_field.to_s)
+    else
+      q = "#{uid_field.to_s} = ? AND provider='email'"
+
+      if ActiveRecord::Base.connection.adapter_name.downcase.starts_with? 'mysql'
+        q = "BINARY " + q
+      end
+    end
+    resource_class.where(q, uid).first
+  end
+
 
   private
 
