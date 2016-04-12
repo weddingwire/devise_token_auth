@@ -182,7 +182,7 @@ module DeviseTokenAuth::Concerns::User
       self.tokens.delete(oldest_token.first)
     end
 
-    self.save!
+    self.save!(validate: false)
 
     return build_auth_header(token, client_id)
   end
