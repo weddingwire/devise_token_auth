@@ -127,7 +127,7 @@ module DeviseTokenAuth::Concerns::SetUserByToken
 
   def get_resource(uid_field='uid', uid=nil)
     if DeviseTokenAuth.custom_scope
-      resource_class.send(DeviseTokenAuth.custom_scope, uid_field, uid).first
+      resource_class.send(DeviseTokenAuth.custom_scope, uid).first
     else
       q = "#{uid_field.to_s} = ? AND provider='email'"
 
