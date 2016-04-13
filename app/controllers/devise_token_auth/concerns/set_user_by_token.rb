@@ -132,7 +132,7 @@ module DeviseTokenAuth::Concerns::SetUserByToken
       q = "#{uid_field.to_s} = ? AND provider='email'"
 
       if ActiveRecord::Base.connection.adapter_name.downcase.starts_with? 'mysql'
-        q = "BINARY " + q
+        q = "BINARY #{q}"
       end
       resource_class.where(q, uid).first
     end
